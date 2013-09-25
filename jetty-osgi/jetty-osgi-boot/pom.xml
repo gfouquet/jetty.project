@@ -7,32 +7,39 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jetty-osgi-boot</artifactId>
+  <version>8.1.13-SNAPSHOT</version>
   <name>Jetty :: OSGi :: Boot</name>
   <description>Jetty OSGi Boot bundle</description>
   <url>http://www.eclipse.org/jetty</url>
   <properties>
     <bundle-symbolic-name>${project.groupId}.boot</bundle-symbolic-name>
+    <jetty.deps.version>8.1.12.v20130726</jetty.deps.version>
   </properties>
   <dependencies>
       <dependency>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-annotations</artifactId>
+      <version>${jetty.deps.version}</version>
       </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-webapp</artifactId>
+      <version>${jetty.deps.version}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-deploy</artifactId>
+      <version>${jetty.deps.version}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-jmx</artifactId>
+      <version>${jetty.deps.version}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-nested</artifactId>
+      <version>${jetty.deps.version}</version>
     </dependency>
     <dependency>
     	<groupId>org.eclipse.osgi</groupId>
@@ -42,6 +49,23 @@
         <groupId>org.eclipse.osgi</groupId>
         <artifactId>org.eclipse.osgi.services</artifactId>
     </dependency>
+    <!--  === REQUIRED BY VERSION CHANGE === -->
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-servlet</artifactId>
+      <version>${jetty.deps.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-util</artifactId>
+      <version>${jetty.deps.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-continuation</artifactId>
+      <version>${jetty.deps.version}</version>
+    </dependency>
+    <!--  /===== -->
   </dependencies>
 
       <build> 
