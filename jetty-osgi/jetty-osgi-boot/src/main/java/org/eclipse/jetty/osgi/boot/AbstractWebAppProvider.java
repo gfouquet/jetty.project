@@ -261,6 +261,12 @@ public abstract class AbstractWebAppProvider extends AbstractLifeCycle implement
                 File webXml = getFile (tmp, bundleInstallLocation);
                 if (webXml != null && webXml.exists())
                     _webApp.setDescriptor(webXml.getAbsolutePath());
+                else {
+                    URL tmpUrl = _bundle.getEntry(tmp);
+                    if (tmpUrl != null) {
+                            _webApp.setDescriptor("bundleentry:" + tmp);
+                    }
+                }
             }
 
             //webdefault.xml
@@ -270,6 +276,12 @@ public abstract class AbstractWebAppProvider extends AbstractLifeCycle implement
                 File defaultWebXml = getFile (tmp, bundleInstallLocation);
                 if (defaultWebXml != null && defaultWebXml.exists())
                     _webApp.setDefaultsDescriptor(defaultWebXml.getAbsolutePath());
+                else {
+                    URL tmpUrl = _bundle.getEntry(tmp);
+                    if (tmpUrl != null) {
+                            _webApp.setDefaultsDescriptor("bundleentry:" + tmp);
+                    }
+                }
             }
 
             //Handle Require-TldBundle

@@ -72,6 +72,18 @@ public class OSGiWebInfConfiguration extends WebInfConfiguration
     {
         super.preConfigure(context);
         
+        // replaces unresolvable bundle pathes by tmpdir pathes
+        String defaultsPath = context.getDefaultsDescriptor();
+        
+        if (defaultsPath != null && defaultsPath.startsWith("bundleentry:")) {
+        	defaultsPath = defaultsPath.substring("bundleentry:".length());
+        	File extractedDefaultsFile = new File(context.getBaseResource().getFile(), defaultsPath);
+        	String extractedDefaultsUrl = extractedDefaultsFile.toURI().toString();
+        
+        	// when absolute path instead of url, jetty cant read (Resource.newSystemResource throws IllegalArgException)
+        	context.setDefaultsDescriptor(extractedDefaultsUrl); 
+        }
+        
         //Check to see if there have been any bundle symbolic names added of bundles that should be
         //regarded as being on the container classpath, and scanned for fragments, tlds etc etc.
         //This can be defined in:
