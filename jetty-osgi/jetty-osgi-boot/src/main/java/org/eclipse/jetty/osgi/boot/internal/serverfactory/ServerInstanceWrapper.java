@@ -43,6 +43,7 @@ import org.eclipse.jetty.osgi.boot.OSGiServerConstants;
 import org.eclipse.jetty.osgi.boot.OSGiUndeployer;
 import org.eclipse.jetty.osgi.boot.ServiceContextProvider;
 import org.eclipse.jetty.osgi.boot.ServiceWebAppProvider;
+import org.eclipse.jetty.osgi.boot.WebAppProviderConfigurer;
 import org.eclipse.jetty.osgi.boot.internal.jsp.TldLocatableURLClassloader;
 import org.eclipse.jetty.osgi.boot.internal.webapp.BundleFileLocatorHelperFactory;
 import org.eclipse.jetty.osgi.boot.internal.webapp.LibExtClassLoaderHelper;
@@ -383,12 +384,17 @@ public class ServerInstanceWrapper
         deploymentLifeCycleBindings.add(new OSGiUndeployer());
         _deploymentManager.setLifeCycleBindings(deploymentLifeCycleBindings);
         
+        WebAppProviderConfigurer providerConfigurer = _server.getBean(WebAppProviderConfigurer.class);
+        
         if (!providerClassNames.contains(BundleWebAppProvider.class.getName()))
         {
             // create it on the fly with reasonable default values.
             try
             {
                 BundleWebAppProvider webAppProvider = new BundleWebAppProvider(this);
+                if (providerConfigurer != null) 
+                	providerConfigurer.configure(webAppProvider);
+
                 _deploymentManager.addAppProvider(webAppProvider);
             }
             catch (Exception e)
@@ -403,6 +409,9 @@ public class ServerInstanceWrapper
             try
             {
                 ServiceWebAppProvider webAppProvider = new ServiceWebAppProvider(this);
+                if (providerConfigurer != null) 
+                	providerConfigurer.configure(webAppProvider);
+
                 _deploymentManager.addAppProvider(webAppProvider);
             }
             catch (Exception e)
