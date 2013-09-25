@@ -200,6 +200,11 @@ public class OSGiWebInfConfiguration extends WebInfConfiguration
                     String patchFragFolder = (String) frag.getHeaders().get(OSGiWebappConstants.JETTY_WAR_PATCH_FRAGMENT_FOLDER_PATH);
                     if (fragFolder != null)
                     {
+                    	if (!fragFolder.endsWith("/")) {
+                    		// frag folder should be a folder and end with a slash. Yet the trailing slashes are stripped by osgi framework
+                    		fragFolder += "/";
+                    	}
+                    	
                         URL fragUrl = frag.getEntry(fragFolder);
                         if (fragUrl == null) { throw new IllegalArgumentException("Unable to locate " + fragFolder
                                                                                   + " inside "
